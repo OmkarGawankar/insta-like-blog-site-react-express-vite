@@ -1,5 +1,6 @@
 const service = module.exports;
 const userModel = require("./users.model");
+const bcrypt = require('bcrypt');
 
 service.all = async (query, params, body) => {
     try {
@@ -14,13 +15,14 @@ service.all = async (query, params, body) => {
 service.create = async (query, params, body) => {
     try {
 
-        const { email, password } = body;
+        const { name, email, password } = body;
 
         // Create a hash of the password
         const passwordHash = await bcrypt.hash(password, 10);
         
         // Create the user with the hashed password
         const user = await userModel.create({
+            name,
             email,
             password: passwordHash,
         });

@@ -3,9 +3,9 @@ const userService = require('../users/users.service');
 
 service.register = async (query, params, body) => {
     try {
-        const { email, password } = body;
 
-        // Verify that the user does not already exist
+        // you need name, email and password to register
+        // This will create new user
         const user = await userService.create({}, {}, body);
 
         return user;
@@ -33,6 +33,6 @@ service.login = async (query, params, body) => {
         return user;
     } catch (error) {
         console.log(error);
-        throw new Error("Login Failed: ", error.message);
+        throw new Error("Invalid Credentials!");
     }
 }

@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
+const bcrypt = require('bcrypt');
+
 
 // Define the User schema
 const userSchema = new mongoose.Schema({
@@ -32,6 +34,17 @@ const userSchema = new mongoose.Schema({
   timestamps: true, // Enables automatic timestamp fields (createdAt and updatedAt)
   strict: false // Allows passing fields not defined in the schema
 });
+
+// Compare password to hashed password stored in the database
+userSchema.methods.comparePassword = async function (password) {
+  try {
+    const isMatch = await bcrypt.compare(password, this.password);
+    return isMatch;
+  } catch (error) {
+    console.log(error);
+    throw new Error(error.message);
+  }
+};
 
 // Create the User model
 const User = mongoose.model('User', userSchema);

@@ -4,8 +4,12 @@ const cors = require("cors");
 const httpStatus = require("http-status");
 const routes = require("./routes");
 const helmet = require("helmet");
+const morgan = require("morgan");
 
 const app = express();
+
+// log HTTP requests
+app.use(morgan("tiny"));
 
 // set security HTTP headers - https://helmetjs.github.io/
 app.use(helmet());
