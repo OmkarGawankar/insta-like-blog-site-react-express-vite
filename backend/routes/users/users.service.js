@@ -13,7 +13,17 @@ service.all = async (query, params, body) => {
 
 service.create = async (query, params, body) => {
     try {
-        const user = await userModel.create(body);
+
+        const { email, password } = body;
+
+        // Create a hash of the password
+        const passwordHash = await bcrypt.hash(password, 10);
+        
+        // Create the user with the hashed password
+        const user = await userModel.create({
+            email,
+            password: passwordHash,
+        });
         return user;
     } catch (error) {
         console.log(error);
@@ -24,6 +34,16 @@ service.create = async (query, params, body) => {
 service.read = async (query, params, body) => {
     try {
         const user = await userModel.findOne({ userId: query.userId });
+        return user;
+    } catch (error) {
+        console.log(error);
+        throw new Error(error.message);
+    }
+}
+
+service.readByEmail = async (query, params, body) => {
+    try {
+        const user = await userModel.findOne({ email: query.email });
         return user;
     } catch (error) {
         console.log(error);
@@ -59,4 +79,3 @@ service.delete = async (query, params, body) => {
         throw new Error(error.message);
     }
 }
-
