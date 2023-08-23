@@ -1,10 +1,10 @@
 const service = module.exports;
-const userModel = require("./users.model");
+const { User } = require("./users.model");
 const bcrypt = require('bcrypt');
 
 service.all = async (query, params, body) => {
     try {
-        const users = await userModel.find();
+        const users = await User.find();
         return users;
     } catch (error) {
         console.log(error);
@@ -19,9 +19,9 @@ service.create = async (query, params, body) => {
 
         // Create a hash of the password
         const passwordHash = await bcrypt.hash(password, 10);
-        
+
         // Create the user with the hashed password
-        const user = await userModel.create({
+        const user = await User.create({
             name,
             email,
             password: passwordHash,
@@ -35,7 +35,7 @@ service.create = async (query, params, body) => {
 
 service.read = async (query, params, body) => {
     try {
-        const user = await userModel.findOne({ userId: query.userId });
+        const user = await User.findOne({ userId: query.userId });
         return user;
     } catch (error) {
         console.log(error);
@@ -45,7 +45,7 @@ service.read = async (query, params, body) => {
 
 service.readByEmail = async (query, params, body) => {
     try {
-        const user = await userModel.findOne({ email: query.email });
+        const user = await User.findOne({ email: query.email });
         return user;
     } catch (error) {
         console.log(error);
@@ -55,7 +55,7 @@ service.readByEmail = async (query, params, body) => {
 
 service.update = async (query, params, body) => {
     try {
-        const updatedUser = await userModel.findOneAndUpdate(
+        const updatedUser = await User.findOneAndUpdate(
             { userId: body.userId }, // Use the query object to identify the user to update
             body, // The update is defined by the body object
             { new: true, runValidators: true } // Options for findOneAndUpdate
@@ -74,7 +74,7 @@ service.update = async (query, params, body) => {
 
 service.delete = async (query, params, body) => {
     try {
-        const user = await userModel.findOneAndDelete({ userId: query.userId });
+        const user = await User.findOneAndDelete({ userId: query.userId });
         return user;
     } catch (error) {
         console.log(error);
