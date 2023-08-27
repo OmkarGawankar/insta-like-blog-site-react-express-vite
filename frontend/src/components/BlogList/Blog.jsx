@@ -25,7 +25,7 @@ export const Blog = ({ blog, onLike, onEdit, onDelete, currentUserId }) => {
         }
     }
 
-    const defaultBlogImage = `https://img.freepik.com/free-photo/view-futuristic-looking-spacecraft_23-2150675577.jpg?t=st=1693097755~exp=1693101355~hmac=ba7448da9766c0e2638893c5b4bca844359ae22715257e8376578535484cde5c&w=360`;
+    const defaultBlogImage = `https://img.freepik.com/premium-photo/closeup-keyboard-ultraviolet-light_53876-33763.jpg?size=626&ext=jpg`;
 
     const getDateString = (date) => {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };

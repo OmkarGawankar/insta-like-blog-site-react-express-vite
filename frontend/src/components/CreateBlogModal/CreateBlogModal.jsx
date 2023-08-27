@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Modal, Stack, Box } from "@mui/material";
-import { Button, Typography, Input } from "@mui/joy";
+import { Button, Typography, Input, Textarea } from "@mui/joy";
 
 
 const style = {
@@ -8,9 +8,10 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: 500,
   bgcolor: 'background.paper',
   border: '2px solid #000',
+  borderRadius: '1rem',
   boxShadow: 24,
   p: 4,
 };
@@ -42,11 +43,11 @@ export const CreateBlogModal = ({ open, onClose, onSubmit }) => {
     <Modal open={open}>
       <Box sx={style}>
         <Stack direction='column' justifyContent='space-between' spacing={3}>
-          <Typography level='title-lg'> Create Blog </Typography>
+          <Typography level='h3'> Create Blog </Typography>
 
           <Stack direction='column' spacing={2}>
-            <Input placeholder='Title' value={title} onChange={(e) => setTitle(e.target.value)} />
-            <Input placeholder='Caption' value={caption} onChange={(e) => setCaption(e.target.value)} />
+            <Input placeholder='Title' value={title} onChange={(e) => setTitle(e.target.value)} required />
+            <Textarea placeholder='Caption' value={caption} minRows={3} maxRows={4} onChange={(e) => setCaption(e.target.value)} />
             <Input placeholder='Image URL' value={image} onChange={(e) => setImage(e.target.value)} />
           </Stack>
 
