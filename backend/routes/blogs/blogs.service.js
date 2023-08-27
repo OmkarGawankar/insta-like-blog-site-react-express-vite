@@ -23,7 +23,8 @@ service.all = async (query, params, body) => {
 service.create = async (query, params, body) => {
     try {
 
-        const { title, caption, mediaContent, userId } = body;
+        const { userId } = query
+        const { title, caption, mediaContent } = body;
 
         // Fetch User using User model
         const user = await userService.read({ userId }, {}, {});

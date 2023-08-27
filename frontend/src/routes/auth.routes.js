@@ -5,7 +5,7 @@ export const register = async (name, email, password) => {
 
     const body = { name, email, password };
 
-    const response = await axios.post(`${BACKEND_URL}/register`, body);
+    const response = await axios.post(`${BACKEND_URL}/auth/register`, body);
 
     if (response.status !== 200) {
         throw new Error(response.data.message);
@@ -18,7 +18,7 @@ export const login = async (email, password) => {
 
     const body = { email, password };
 
-    const response = await axios.post(`${BACKEND_URL}/login`, body);
+    const response = await axios.post(`${BACKEND_URL}/auth/login`, body);
 
     if (response.status !== 200) {
         throw new Error(response.data.message);

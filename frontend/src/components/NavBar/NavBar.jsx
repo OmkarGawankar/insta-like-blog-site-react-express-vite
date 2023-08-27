@@ -41,22 +41,25 @@ export const NavBar = () => {
           Blogs
         </Typography>
         {user ? (
-          <div>
-            <IconButton
-              size="large"
-              edge="end"
-              color="inherit"
-              aria-label="user"
-            >
-              <AccountCircleIcon fontSize="large" />
-            </IconButton>
-            <Typography sx={{ display: 'inline-block', marginRight: '10px' }}>
-              {user.username}
-            </Typography>
-            <Button color="inherit" onClick={onLogout}>
-              Logout
+          <Stack direction='row' justifyContent='space-between' alignItems='center' spacing={2}>
+            <Stack direction='row' justifyContent='space-between' alignItems='center' sx={{ gap: '0.5rem' }}>
+              <IconButton
+                size="large"
+                edge="end"
+                color="inherit"
+                aria-label="user"
+              >
+                <AccountCircleIcon fontSize="large" />
+              </IconButton>
+              <Typography sx={{ display: 'inline-block' }}>
+                {user.name}
+              </Typography>
+            </Stack>
+
+            <Button variant='solid' color="danger" onClick={onLogout}>
+              LOGOUT
             </Button>
-          </div>
+          </Stack>
         ) :
           (
             <Stack direction='row' gap={2}>

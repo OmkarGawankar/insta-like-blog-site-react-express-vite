@@ -1,7 +1,13 @@
-import { Box, Stack } from "@mui/material";
+import { useState } from "react";
+
 import { BlogList } from "../../components/BlogList/BlogList"
 import { NavBar } from "../../components/NavBar/NavBar"
-import Button from "@mui/joy/Button";
+import { CreateBlogModal } from "../../components/CreateBlogModal/CreateBlogModal";
+import { Box, Stack } from "@mui/material";
+import { Button } from "@mui/joy";
+
+// Routes
+import { createBlog } from '../../routes/blogs.routes';
 
 const blogs = [
   {
@@ -74,7 +80,40 @@ const blogs = [
 
 const Home = () => {
 
-  const onCreateBlog = () => {}
+  const [createBlogModalIsOpen, setCreateBlogModalIsOpen] = useState(false);
+
+  const onCreateBlog = () => {
+    setCreateBlogModalIsOpen(true);
+  }
+
+  const onCloseCreateBlogModal = () => {
+    setCreateBlogModalIsOpen(false);
+  }
+
+  const onSubmitCreateBlogModal = async (blog) => {
+    try {
+      // Create blog
+      const user = JSON.parse(localStorage.getItem('user'));
+
+      if (!user) {
+        throw new Error('User not logged in');
+      }
+
+      const response = await createBlog(user.userId, blog);
+
+      if (response.status !== 200) {
+        throw new Error(response.data.message);
+      }
+
+      alert('Blog created successfully');
+
+    } catch (error) {
+      console.log(error);
+      alert('Error creating blog')
+    } finally {
+      setCreateBlogModalIsOpen(false);
+    }
+  }
 
   return (
     <Box sx={{
@@ -83,7 +122,7 @@ const Home = () => {
     }}>
       <NavBar />
 
-      <Stack direction='row' justifyContent='end' alignItems='center' sx={{ margin: '2rem' }}>
+      <Stack direction='row' justifyContent='end' alignItems='center' sx={{ margin: '2rem', marginBottom: 0 }}>
         <Button
           variant='solid'
           color="neutral"
@@ -102,6 +141,11 @@ const Home = () => {
       }}>
         <BlogList blogs={blogs} />
       </Box>
+
+      <br />
+
+      <CreateBlogModal open={createBlogModalIsOpen} onClose={onCloseCreateBlogModal} onSubmit={onSubmitCreateBlogModal} />
+
     </Box>
   )
 }

@@ -19,11 +19,10 @@ const blogSchema = new mongoose.Schema({
         trim: true,
         maxlength: 1000,
     },
-
-    mediaContent: {
-        type: [String],
-        default: [],
+    image: {
+        type: String,
         required: false,
+        trim: true,
     },
     user: {
         type: userSchema,

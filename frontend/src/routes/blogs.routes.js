@@ -1,11 +1,9 @@
 import axios from 'axios';
 import { BACKEND_URL } from '../config';
 
-export const create = async (name, email, password) => {
+export const createBlog = async (userId, blog) => {
 
-    const body = { name, email, password };
-
-    const response = await axios.post(`${BACKEND_URL}/blogs/create`, body);
+    const response = await axios.post(`${BACKEND_URL}/blogs/create?userId=${userId}`, blog);
 
     if (response.status !== 200) {
         throw new Error(response.data.message);

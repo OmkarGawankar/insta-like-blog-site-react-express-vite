@@ -20,4 +20,4 @@ export const BlogList = ({ blogs }) => {
             </Grid>
         </section>
     )
-}
+}  
