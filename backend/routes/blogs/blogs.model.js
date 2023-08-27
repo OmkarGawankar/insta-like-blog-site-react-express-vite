@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
-const { userSchema } = require('../users/users.model');
 
 const blogSchema = new mongoose.Schema({
     blogId: {
@@ -25,10 +24,9 @@ const blogSchema = new mongoose.Schema({
         trim: true,
     },
     user: {
-        type: userSchema,
-        ref: 'User',
+        type: mongoose.Schema.Types.Mixed,
         required: true,
-    },
+    }
 }, {
     timestamps: true,
     strict: false,

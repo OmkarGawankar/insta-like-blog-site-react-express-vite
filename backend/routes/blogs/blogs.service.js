@@ -7,7 +7,6 @@ service.all = async (query, params, body) => {
     try {
         // Get all blogs using Blog model with pagination
         const blogs = await Blog.find()
-            .populate('user', 'name email')
             .sort({ createdAt: -1 })
             .skip((query.page - 1) * query.limit)
             .limit(query.limit);
@@ -38,7 +37,11 @@ service.create = async (query, params, body) => {
             title,
             caption,
             mediaContent,
-            user
+            user: {
+                userId: user.userId,
+                name: user.name,
+                email: user.email,
+            }
         }
 
         // Create blog using Blog model

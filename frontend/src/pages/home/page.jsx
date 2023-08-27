@@ -99,10 +99,10 @@ const Home = () => {
         throw new Error('User not logged in');
       }
 
-      const response = await createBlog(user.userId, blog);
+      const newBlog = await createBlog(user.userId, blog);
 
-      if (response.status !== 200) {
-        throw new Error(response.data.message);
+      if (!newBlog) {
+        throw new Error('Error creating blog');
       }
 
       alert('Blog created successfully');
