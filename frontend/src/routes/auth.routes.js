@@ -1,12 +1,11 @@
 import axios from 'axios';
-
-const API_URL = 'http://localhost:8082/api/auth/';
+import { BACKEND_URL } from '../config';
 
 export const register = async (name, email, password) => {
 
     const body = { name, email, password };
 
-    const response = await axios.post(API_URL + 'register', body);
+    const response = await axios.post(`${BACKEND_URL}/register`, body);
 
     if (response.status !== 200) {
         throw new Error(response.data.message);
@@ -19,7 +18,7 @@ export const login = async (email, password) => {
 
     const body = { email, password };
 
-    const response = await axios.post(API_URL + 'login', body);
+    const response = await axios.post(`${BACKEND_URL}/login`, body);
 
     if (response.status !== 200) {
         throw new Error(response.data.message);

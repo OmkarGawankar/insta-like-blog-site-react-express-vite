@@ -42,7 +42,7 @@ const Register = () => {
             <Grid item xs={10} sm={8} md={6} lg={4}>
                 <Paper elevation={3} sx={{ padding: '20px 10px' }}>
                     <Typography variant="h4" align="center" gutterBottom>
-                        Login
+                        Register
                     </Typography>
                     <form onSubmit={handleSubmit}>
                         <Stack spacing={2}>
