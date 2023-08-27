@@ -25,7 +25,9 @@ export const NavBar = () => {
     // Remove user from local storage
     localStorage.removeItem('user');
     setUser(null);
-    navigate('/login');
+
+    // Reload the page
+    window.location.reload();
   }
 
   // Load user from local storage

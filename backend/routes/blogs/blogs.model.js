@@ -4,7 +4,8 @@ const { v4: uuidv4 } = require('uuid');
 const blogSchema = new mongoose.Schema({
     blogId: {
         type: String,
-        default: uuidv4(),
+        default: uuidv4,
+        unique: true,
     },
     title: {
         type: String,

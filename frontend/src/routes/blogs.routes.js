@@ -20,5 +20,16 @@ export const getAllBlogs = async () => {
         throw new Error(response.data.message);
     }
 
-    return response.data;
+    return response.data.data;
+}
+
+export const deleteBlog = async (blogId) => {
+    
+        const response = await axios.post(`${BACKEND_URL}/blogs/delete?blogId=${blogId}`);
+    
+        if (response.status !== 200) {
+            throw new Error(response.data.message);
+        }
+    
+        return response.data;
 }

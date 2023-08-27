@@ -7,11 +7,23 @@ import { Stack } from '@mui/material';
 import Button from '@mui/joy/Button';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-export const Blog = ({ blog, onLike, onEdit, onDelete }) => {
+export const Blog = ({ blog, onLike, onEdit, onDelete, currentUserId }) => {
 
     // Validations
     if (!blog) return null;
-    if (!blog.user) return null;
+
+    const handleDelete = async (blogId) => {
+        try {
+            if (window.confirm('Are you sure you want to delete this blog?')) {
+                await onDelete(blogId);
+            }
+        } catch (error) {
+            console.log(error);
+            alert('Error deleting blog');
+        } finally {
+            window.location.reload();
+        }
+    }
 
     const defaultBlogImage = `https://img.freepik.com/free-photo/view-futuristic-looking-spacecraft_23-2150675577.jpg?t=st=1693097755~exp=1693101355~hmac=ba7448da9766c0e2638893c5b4bca844359ae22715257e8376578535484cde5c&w=360`;
 
@@ -27,7 +39,7 @@ export const Blog = ({ blog, onLike, onEdit, onDelete }) => {
             <div>
                 <AspectRatio ratio={16 / 9}>
                     <img
-                        src={blog.mediaContent[0] || defaultBlogImage} alt={blog.title}
+                        src={blog.image || defaultBlogImage} alt={blog.title}
                         style={{
                             objectFit: 'cover',
                             objectPosition: 'center',
@@ -53,10 +65,10 @@ export const Blog = ({ blog, onLike, onEdit, onDelete }) => {
                     </IconButton>
 
                     {
-                        blog.user.id === 1 && (
+                        blog.user.userId === currentUserId && (
                             <Stack direction='row' justifyContent='space-between' gap={2}>
                                 <Button variant='soft' color='warning' onClick={onEdit}>Edit</Button>
-                                <Button variant='solid' color='danger' onClick={onDelete}>Delete</Button>
+                                <Button variant='solid' color='danger' onClick={() => handleDelete(blog.blogId)}>Delete</Button>
                             </Stack>
                         )
                     }

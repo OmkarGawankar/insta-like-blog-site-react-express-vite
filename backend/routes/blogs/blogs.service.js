@@ -23,7 +23,7 @@ service.create = async (query, params, body) => {
     try {
 
         const { userId } = query
-        const { title, caption, mediaContent } = body;
+        const { title, caption, image } = body;
 
         // Fetch User using User model
         const user = await userService.read({ userId }, {}, {});
@@ -36,7 +36,7 @@ service.create = async (query, params, body) => {
         const newBlog = {
             title,
             caption,
-            mediaContent,
+            image,
             user: {
                 userId: user.userId,
                 name: user.name,

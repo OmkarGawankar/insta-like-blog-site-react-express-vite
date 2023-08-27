@@ -1,15 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { BlogList } from "../../components/BlogList/BlogList"
 import { NavBar } from "../../components/NavBar/NavBar"
 import { CreateBlogModal } from "../../components/CreateBlogModal/CreateBlogModal";
 import { Box, Stack } from "@mui/material";
 import { Button } from "@mui/joy";
+import { getAllBlogs } from "../../routes/blogs.routes";
 
 // Routes
 import { createBlog } from '../../routes/blogs.routes';
 
-const blogs = [
+const blogss = [
   {
     id: 1,
     title: 'Blog 1',
@@ -81,8 +82,40 @@ const blogs = [
 const Home = () => {
 
   const [createBlogModalIsOpen, setCreateBlogModalIsOpen] = useState(false);
+  const [blogsData, setBlogsData] = useState([]);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+
+        // Get user from local storage
+        setUser(JSON.parse(localStorage.getItem('user')));
+
+        // Fetch Blogs
+        const blogs = await getAllBlogs();
+
+        if (!blogs) {
+          throw new Error('Error fetching blogs');
+        }
+
+        setBlogsData(blogs);
+
+      } catch (error) {
+        console.log(error);
+        alert('Error fetching blogs');
+      }
+    }
+
+    fetchBlogs();
+
+  }, []);
 
   const onCreateBlog = () => {
+    if (!user) {
+      alert('Please login to create a blog');
+      return;
+    }
     setCreateBlogModalIsOpen(true);
   }
 
@@ -106,6 +139,9 @@ const Home = () => {
       }
 
       alert('Blog created successfully');
+
+      // Reload the page
+      window.location.reload();
 
     } catch (error) {
       console.log(error);
@@ -139,7 +175,7 @@ const Home = () => {
         marginX: '2rem',
         marginY: '1rem'
       }}>
-        <BlogList blogs={blogs} />
+        <BlogList blogs={blogsData} user={user} />
       </Box>
 
       <br />
