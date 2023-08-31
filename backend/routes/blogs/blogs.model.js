@@ -24,6 +24,11 @@ const blogSchema = new mongoose.Schema({
         required: false,
         trim: true,
     },
+    likes: {
+        type: [String],
+        required: false,
+        default: [],
+    },
     user: {
         type: mongoose.Schema.Types.Mixed,
         required: true,

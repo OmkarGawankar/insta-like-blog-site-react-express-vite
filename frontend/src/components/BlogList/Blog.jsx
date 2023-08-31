@@ -1,7 +1,6 @@
 import Card from '@mui/joy/Card';
 import AspectRatio from '@mui/joy/AspectRatio';
 import CardContent from '@mui/joy/CardContent';
-import IconButton from '@mui/joy/IconButton';
 import Typography from '@mui/joy/Typography';
 import { Stack } from '@mui/material';
 import Button from '@mui/joy/Button';
@@ -20,6 +19,17 @@ export const Blog = ({ blog, onLike, onEdit, onDelete, currentUserId }) => {
         } catch (error) {
             console.log(error);
             alert('Error deleting blog');
+        } finally {
+            window.location.reload();
+        }
+    }
+
+    const handleLike = async (blogId) => {
+        try {
+            await onLike(blogId);
+        } catch (error) {
+            console.log(error);
+            alert('Error liking blog');
         } finally {
             window.location.reload();
         }
@@ -57,12 +67,15 @@ export const Blog = ({ blog, onLike, onEdit, onDelete, currentUserId }) => {
                 </Stack>
 
                 <Typography level='title-lg'>{blog.title}</Typography>
-                <Typography level='title-md'>{blog.caption}</Typography>
+                <Typography level='title-md' sx={{ height: '6.2rem', overflowY: 'clip'}}>{blog.caption}</Typography>
+
+                <br />
 
                 <Stack direction='row' justifyContent='space-between' alignItems='center'>
-                    <IconButton onClick={onLike}>
+                    <Button variant='soft' color='warning' onClick={() =>handleLike(blog.blogId)}>
+                        <Typography level='body-md'>{blog.likes.length}</Typography>
                         <FavoriteIcon style={{ color: '#E0115F' }} />
-                    </IconButton>
+                    </Button>
 
                     {
                         blog.user.userId === currentUserId && (

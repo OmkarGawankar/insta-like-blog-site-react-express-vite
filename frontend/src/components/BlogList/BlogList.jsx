@@ -1,10 +1,13 @@
 import { Grid } from "@mui/material";
 import { Blog } from "./Blog";
-import { deleteBlog } from "../../routes/blogs.routes";
+import { deleteBlog, likeBlog } from "../../routes/blogs.routes";
 
 export const BlogList = ({ blogs, user }) => {
 
-    const onLike = () => { }
+    const onLike = async (blogId) => {
+        const user = JSON.parse(localStorage.getItem('user')); 
+        await likeBlog(user.userId, blogId);
+    }
 
     const onEdit = () => { }
 

@@ -11,4 +11,6 @@ router.post('/update', controller.update);
 
 router.post('/delete', controller.delete);
 
+router.post('/like', controller.like);
+
 module.exports = router;

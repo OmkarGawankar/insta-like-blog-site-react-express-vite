@@ -24,12 +24,23 @@ export const getAllBlogs = async () => {
 }
 
 export const deleteBlog = async (blogId) => {
-    
-        const response = await axios.post(`${BACKEND_URL}/blogs/delete?blogId=${blogId}`);
-    
-        if (response.status !== 200) {
-            throw new Error(response.data.message);
-        }
-    
-        return response.data;
+
+    const response = await axios.post(`${BACKEND_URL}/blogs/delete?blogId=${blogId}`);
+
+    if (response.status !== 200) {
+        throw new Error(response.data.message);
+    }
+
+    return response.data;
+}
+
+export const likeBlog = async (userId, blogId) => {
+
+    const response = await axios.post(`${BACKEND_URL}/blogs/like?userId=${userId}&blogId=${blogId}`);
+
+    if (response.status !== 200) {
+        throw new Error(response.data.message);
+    }
+
+    return response.data;
 }

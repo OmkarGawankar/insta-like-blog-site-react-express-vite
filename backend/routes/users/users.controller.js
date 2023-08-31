@@ -60,3 +60,15 @@ controller.delete = async (req, res, next) => {
     next(error);
   }
 }
+
+controller.like = async (req, res, next) => {
+  try {
+    const { query, params, body } = req;
+    const user = await service.like(query, params, body);
+    res.status(200).json({
+      data: user
+    });
+  } catch (error) {
+    next(error);
+  }
+}

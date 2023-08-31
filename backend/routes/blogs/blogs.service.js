@@ -94,3 +94,33 @@ service.delete = async (query, params, body) => {
         throw new Error("Cannot delete Blog", error.message)
     }
 }
+
+service.like = async (query, params, body) => {
+    try {
+        const blog = await Blog.findOne({ blogId: query.blogId });
+
+        if (!blog) {
+            throw new Error("Blog not found");
+        }
+
+        const userId = query.userId;
+
+        // Check if the userId is already in the likes array
+        const index = blog.likes.indexOf(userId);
+
+        if (index === -1) {
+            // If userId is not in likes, add it
+            blog.likes.push(userId);
+        } else {
+            // If userId is already in likes, remove it
+            blog.likes.splice(index, 1);
+        }
+
+        // Save the updated blog
+        await blog.save();
+
+    } catch (error) {
+        console.error(error);
+        throw new Error("Cannot like/unlike Blog: " + error.message);
+    }
+}
