@@ -6,7 +6,8 @@ import IconButton from '@mui/material/IconButton';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Stack } from '@mui/material';
+import { Stack , Box} from '@mui/material';
+import { HomeOutlined } from '@mui/icons-material';
 
 export const NavBar = () => {
 
@@ -39,9 +40,20 @@ export const NavBar = () => {
   return (
     <AppBar position="static" color='secondary'>
       <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Blogs
+        <Button onClick={() => window.location.href = '/'} style={{ flexShrink: 1, backgroundColor: 'transparent'}} >
+          <HomeOutlined />
+          &nbsp;&nbsp;
+          <Typography variant="h6" component="div">
+          Blog App
         </Typography>
+        </Button>
+        
+        <Button onClick={() => window.location.href = '/statistics'} style={{ flexShrink: 1, backgroundColor: 'transparent'}}>
+        <Typography variant="h6" component="div">
+          Statistics
+        </Typography>
+        </Button>
+        <Box sx={{ flexGrow: 1 }}></Box>
         {user ? (
           <Stack direction='row' justifyContent='space-between' alignItems='center' spacing={2}>
             <Stack direction='row' justifyContent='space-between' alignItems='center' sx={{ gap: '0.5rem' }}>
